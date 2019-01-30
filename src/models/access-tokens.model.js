@@ -19,12 +19,12 @@ const AccessTokensSchema = new mongoose.Schema({
 // MongooseAutoIncrementID.initialise('MyCustomName');
 
 // 🔌 Create the Plugin
-const plugin = new MongooseAutoIncrementID(AccessTokensSchema, 'access_tokens');
+const plugin = new MongooseAutoIncrementID(AccessTokensSchema, 'access_tokens', { field:'id' });
 
 // Log for the plugin
 plugin.applyPlugin()
   .then(() => {
-    console.log('Auto Increment Implemented!.');
+    console.log('Auto access tokens Increment Implemented!.');
   })
   .catch(e => {
     console.log('An Error Applying plugin. ');
