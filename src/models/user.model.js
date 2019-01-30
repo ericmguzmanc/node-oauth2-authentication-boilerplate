@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 const { MongooseAutoIncrementID } = require('mongoose-auto-increment-reworked');
 
 // 📝 Schema definition
-const MySchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   // Properties
-  // someField: {
-  //   type: String
-  // }
+  username: {
+    type: String
+  },
+  user_password: {
+    type: String
+  }
 }); 
 
 /**
@@ -16,7 +19,7 @@ const MySchema = new mongoose.Schema({
 // MongooseAutoIncrementID.initialise('MyCustomName');
 
 // 🔌 Create the Plugin
-const plugin = new MongooseAutoIncrementID(MySchema, 'ModelName');
+const plugin = new MongooseAutoIncrementID(UserSchema, 'users');
 
 // Log for the plugin
 plugin.applyPlugin()
@@ -28,6 +31,6 @@ plugin.applyPlugin()
   });
 
   // ➕ Add the plugin to the model
-  MySchema.plugin(MongooseAutoIncrementID.plugin, {modelName: 'ModelName'});
+  UserSchema.plugin(MongooseAutoIncrementID.plugin, {modelName: 'users'});
 
-  module.exports = mongoose.model('ModelName', MySchema);
+  module.exports = mongoose.model('users', UserSchema);
