@@ -4,37 +4,21 @@ const path = require('path');
 require('dotenv').config(); //dotenv - loads environment variables from .env file into process.env
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const dbconn = require('./dbHelpers/db');
-const userDBHelper = require('./dbHelpers/userDBHelper');
-const authRoutesMethods = require('./authorization/authRoutesMethods');
-const accessTokenDBHelper = require('./dbHelpers/bearerTokensDBHelper');
-const oAuthModel = require('./authorization/accessTokenModel')(userDBHelper, accessTokenDBHelper);
-const oAuth2Server = require('node-oauth2-server');
+const dbconn = require('../db');
+const { promisify } = require('util');
 
-// console.log('\n\n oauthmodel ', oAuthModel, ' \n\n')
-app.oauth = oAuth2Server({
-  model: oAuthModel,
-  grants: ['password'],
-  debug: true
-});
-
-const authRouter = require('./authorization/authRouter')(express.Router(), app, authRoutesMethods);
+app.use(bodyParser.json());
 
 // CORS Enabled
 app.use(cors());
 
-
 // ℹ Routes import will be here
-app.use('/auth', authRouter);
-app.use(app.oauth.errorHandler());
-// ---
 
 
 /**
  *  🤝🏻 Takes any incoming json string and 
  *  creates attribute called body
  */
-app.use(bodyParser.json());
 
 // 🔗 Log
 app.use((req, res, next) => {
